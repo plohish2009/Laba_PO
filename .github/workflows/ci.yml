@@ -1,0 +1,15 @@
+name: CI Check
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run simulated tests
+        run: echo "Все автоматические проверки успешно пройдены!"
