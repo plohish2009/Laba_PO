@@ -1,3 +1,24 @@
+# name: CI Check
+
+# on:
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
+
+#       - name: TruffleHog OSS
+#         uses: trufflesecurity/trufflehog@main
+#         with:
+#           base: ""
+#           head: "${{ github.sha }}"
+#           extra_args: base filesystem . --fail
 name: CI Check
 
 on:
@@ -10,12 +31,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: TruffleHog OSS
         uses: trufflesecurity/trufflehog@main
         with:
-          base: ""
-          head: "${{ github.sha }}"
-          extra_args: base filesystem . --fail
+          extra_args: filesystem . --fail
+
