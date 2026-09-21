@@ -16,4 +16,6 @@ jobs:
       - name: TruffleHog OSS
         uses: trufflesecurity/trufflehog@main
         with:
+          base: ""
+          head: "${{ github.sha }}"
           extra_args: base filesystem . --fail
