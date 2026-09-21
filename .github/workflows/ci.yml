@@ -16,4 +16,4 @@ jobs:
       - name: TruffleHog OSS
         uses: trufflesecurity/trufflehog@main
         with:
-          extra_args: filesystem . --fail
+          extra_args: base filesystem . --fail
