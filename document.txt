@@ -1,8 +1,0 @@
-��текст из ветки main, который все сломает
-Line 2
-Feature Merge Line
-Squash part 1
-Squash part 2
-New change from copy 1
-Новая строка для друга
-Сделал Русаков А. С
