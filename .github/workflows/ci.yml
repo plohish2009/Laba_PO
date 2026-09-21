@@ -10,6 +10,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Run simulated tests
-        run: echo "Все автоматические проверки успешно пройдены!"
+      - name: TruffleHog OSS
+        uses: trufflesecurity/trufflehog-actions@main
+        with:
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
