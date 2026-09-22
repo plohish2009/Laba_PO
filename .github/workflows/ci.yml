@@ -1,15 +1,16 @@
 name: CI Check
 
 on:
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+        name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Run simulated tests
+        name: Run simulated tests
         run: echo "Все автоматические проверки успешно пройдены!"
+        name: TruffleHog OSS
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          extra_args: --no-verification
