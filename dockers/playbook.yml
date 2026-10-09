@@ -1,0 +1,56 @@
+---
+- name: Автоматическое развертывание приложения в KVM
+  hosts: kvm_hosts
+  become: no  # Подключаемся и собираем факты как обычный пользователь artem
+
+  tasks:
+    - name: Обновление кэша пакетов apt
+      apt:
+        update_cache: yes
+      become: yes  # Нужен root для apt
+
+    - name: Установка Docker и Docker Compose
+      apt:
+        name:
+          - docker.io
+          - docker-compose-v2
+        state: present
+      become: yes  # Нужен root для apt
+
+    - name: Убедиться, что служба Docker запущена
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes  # Нужен root для управления системной службой
+
+    - name: Добавление пользователя artem в группу docker
+      user:
+        name: artem
+        groups: docker
+        append: yes
+      become: yes  # Нужен root для изменения групп пользователей
+
+    - name: Создание папки для приложения внутри KVM
+      file:
+        path: /home/artem/app
+        state: directory
+        owner: artem
+        group: artem
+        mode: '0755'
+      # become не нужен, так как обычный пользователь artem имеет полные права в своей домашней директории
+
+    - name: Копирование файлов проекта из WSL в KVM
+      synchronize:
+        src: ./
+        dest: /home/artem/app/
+        delete: yes
+        rsync_opts:
+          - "--exclude=.git"
+      # become не нужен
+
+    - name: Запуск Docker Compose (Сборка и старт контейнеров)
+      command: docker compose up -d --build
+      args:
+        chdir: /home/artem/app
+      # become не нужен, так как пользователь artem уже добавлен в группу docker
