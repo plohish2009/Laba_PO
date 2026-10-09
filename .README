@@ -1,6 +1,9 @@
 Проект реализует схему вложенной виртуализации: 
 **Windows (Хост) ➔ WSL2 ➔ KVM (Ubuntu Server) ➔ Docker Compose (Flask + Postgres + pgAdmin)**
 KVM имеет адрес 192.168.122.16
+Для запуска KVM: virsh start ubuntu-server
+Для проброса портов: ssh -f -N -L 5000:192.168.122.16:5000 artem@192.168.122.16
+
 
 1) Открыть консоль и запустить WSL (wsl)
 2) Перейти в в нужную папку (cd /mnt/d/Laba_Po/dockers)
